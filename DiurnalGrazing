@@ -1,0 +1,18 @@
+parameters
+global A_0
+
+for A_0 = 0.100:0.001:0.12
+    tspan = (0:0.042:36500);
+    P = 4.12;
+    Z = 4.95;
+    y0 = [P,Z];
+    
+%     Solving and plotting plankton populations
+    ode45(@planktonderivs_diurnal,tspan,y0);
+    title(['Change in plankton populations, ','amplitude = ',num2str(A_0)]);
+    ylabel('Concentration of plankton (\mug N/L)')
+    xlabel('t (days)')
+    legend('P: phytoplankton','Z: zooplankton')
+    [t,y] = ode45(@planktonderivs_diurnal,tspan,y0);
+    waitforbuttonpress;
+end

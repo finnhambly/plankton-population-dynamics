@@ -1,0 +1,32 @@
+parameters
+
+tspan = [0 1000]; % t has a time unit of days
+% Set the initial populations of P and Z
+P = 20;
+Z = 5;
+y0 = [P,Z];
+% Solve the differential equations an plot change in populations
+ode45(@planktonderivs,tspan,y0);
+title('Change in populations P and Z')
+ylabel('Concentration of plankton (\mug N/L)')
+xlabel('t (days)')
+legend('P: phytoplankton','Z: zooplankton')
+[t,y] = ode45(@planktonderivs,tspan,y0);
+
+% TEST MANY DIFFERENT POINTS
+trials = 100;
+stablepoints = zeros(trials,2);
+
+for i=1:trials
+    tspan = [0 1000];
+    P = 10*rand(1);
+    Z = 10*rand(1);
+    y0 = [P,Z];
+    [t,y] = ode45(@planktonderivs,tspan,y0);
+    stablepoints(i,:) = y(end,:);
+end
+ 
+stablepoints_av = mean(stablepoints);
+% Be careful - a trivial or anomalous solution may be included within this
+% average this average. Ensure stablepoints does not contain negatives or
+% zeros. 

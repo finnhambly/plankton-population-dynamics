@@ -1,0 +1,16 @@
+subplot(2,1,1);
+t = 0:364;
+r = 0.2*sin(2*pi*t/365 - pi/2) + 0.3;
+plot(t,r)
+xlim([0 365])
+xlabel('t (days)');
+ylabel('Max. growth rate of P, r(t) (day^{-1}');
+title('Seasonal change in max. growth rate of phytoplankton populations');
+
+subplot(2,1,2);
+dr_dt = 0.4*(pi/365)*cos(2*pi*t/365 - pi/2);
+plot(t,(1./r).*dr_dt)
+xlim([0 365])
+xlabel('t (days)');
+ylabel('$\displaystyle\frac{1}{r(t)}\times\frac{dr}{dt} (day^{-1})$','interpreter','latex');
+title('Rate of change of max. growth rate / growth rate')

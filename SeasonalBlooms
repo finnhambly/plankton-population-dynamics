@@ -1,0 +1,27 @@
+parameters
+global A_0
+
+for A_0 = 0.1:0.001:0.2
+    tspan = (0:0.5:1825);
+    P = 4.12;
+    Z = 4.95;
+    y0 = [P,Z];
+    
+%     Solving and plotting plankton populations
+    subplot(2,1,1);
+    ode45(@planktonderivs_seasonal,tspan,y0);
+    title(['Change in plankton populations, ','amplitude = ',num2str(A_0)]);
+    ylabel('Concentration of plankton (\mug N/L)')
+    xlabel('t (days)')
+    legend('P: phytoplankton','Z: zooplankton')
+    [t,y] = ode45(@planktonderivs_seasonal,tspan,y0);
+    
+%     Phase plane plot    
+    subplot(2,1,2); 
+    plot(y(730:end,1),y(730:end,2));
+    title('Phase plane');
+    xlabel('P, concentration of phytoplankton (\mug N/L)')
+    ylabel('Z, concentration of zooplankton (\mug N/L)')
+    
+    waitforbuttonpress;
+end
